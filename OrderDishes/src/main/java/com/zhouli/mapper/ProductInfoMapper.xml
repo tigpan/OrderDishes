@@ -1,0 +1,57 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper
+PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+"http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.zhouli.mapper.ProductInfoMapper">
+	<!-- 判断主键是否存在 不存在则新增 存在则修改 -->
+	<insert id="saveProductInfo" parameterType="com.zhouli.domain.ProductInfo">
+		INSERT INTO
+		product_info
+		(product_id,product_name,product_price,product_stock,product_description,product_icon,category_type)
+		values(#{productId},#{productName},#{productPrice},#{productStock},#{productDescription},#{productIcon},#{categoryType})
+		ON DUPLICATE KEY UPDATE product_name =
+		#{productName},product_price=#{productPrice},product_stock=#{productStock},
+		product_description=#{productDescription},
+		product_icon =
+		#{productIcon},
+		category_type=#{categoryType} 
+	</insert>
+	<select id="findByProductStates" parameterType="java.lang.Integer"
+		resultType="com.zhouli.domain.ProductInfo">
+		SELECT product_name productName,product_price
+		productPrice,product_stock
+		productStock,product_description
+		productDescription,product_icon
+		productIcon,category_type categoryType
+		FROM PRODUCT_INFO Where category_type = #{categoryType}
+	</select>
+	<select id="findAll" resultType="com.zhouli.domain.ProductInfo">
+		SELECT product_id productId,
+		product_name
+		productName,product_price productPrice,product_stock
+		productStock,product_description productDescription,product_icon
+		productIcon,category_type categoryType,product_status productStatus
+		FROM PRODUCT_INFO
+	</select>
+	<select id="findOne" parameterType="java.lang.String"
+		resultType="com.zhouli.domain.ProductInfo">
+		SELECT product_id productId,product_name
+		productName,product_price
+		productPrice,product_stock
+		productStock,product_description
+		productDescription,product_icon
+		productIcon,category_type categoryType
+		FROM PRODUCT_INFO Where
+		product_id = #{productId}
+	</select>
+	<update id="onSale" parameterType="java.lang.String">
+		update
+		product_info SET product_status = 0 where product_id
+		= #{productId}
+	</update>
+	<update id="offSale" parameterType="java.lang.String">
+		update
+		product_info SET
+		product_status = 1 where product_id = #{productId}
+	</update>
+</mapper>

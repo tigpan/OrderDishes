@@ -1,0 +1,54 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper
+PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+"http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.zhouli.mapper.ProductCategoryMapper">
+	<insert id="save" parameterType="com.zhouli.domain.ProductCategory">
+		Insert Into
+		product_category(category_name,category_type)
+		values(#{categoryName},#{categoryType})
+	</insert>
+	<select id="findOneById" parameterType="java.lang.Integer"
+		resultType="com.zhouli.domain.ProductCategory">
+		SELECT
+		category_id categoryId,
+		category_name categoryName,
+		category_type categoryType,
+		create_time createTime,
+		update_time
+		updateTime
+		FROM product_category where category_id = #{id}
+	</select>
+	<select id="findAll" resultType="com.zhouli.domain.ProductCategory">
+		SELECT category_id categoryId,
+		category_name categoryName,
+		category_type categoryType,
+		create_time
+		createTime,
+		update_time
+		updateTime FROM product_category
+	</select>
+	<delete id="delete" parameterType="java.lang.Integer">
+		DELETE FROM product_category
+		where category_id = #{categoryId}
+	</delete>
+	<select id="findByCategoryTypeIn" parameterType="java.util.List"
+		resultType="com.zhouli.domain.ProductCategory">
+		SELECT category_id categoryId,
+		category_name categoryName,
+		category_type categoryType,
+		create_time createTime
+		FROM product_category
+		where category_type In
+		<foreach collection="list" item="categoryType" open="("
+			separator="," close=")">
+			#{categoryType}
+		</foreach>
+	</select>
+	<update id="update" parameterType="com.zhouli.domain.ProductCategory">
+		update product_category SET category_name = #{categoryName} , category_type
+		= #{categoryType} WHERE category_id = #{categoryId}
+
+
+	</update>
+</mapper>

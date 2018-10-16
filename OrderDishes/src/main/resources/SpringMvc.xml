@@ -1,0 +1,47 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<beans xmlns="http://www.springframework.org/schema/beans"
+	xmlns:mvc="http://www.springframework.org/schema/mvc" xmlns:context="http://www.springframework.org/schema/context"
+	xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xmlns:aop="http://www.springframework.org/schema/aop"
+	xsi:schemaLocation="
+	        http://www.springframework.org/schema/beans 
+			http://www.springframework.org/schema/beans/spring-beans.xsd 
+			http://www.springframework.org/schema/mvc 
+			http://www.springframework.org/schema/mvc/spring-mvc.xsd 
+			http://www.springframework.org/schema/aop
+	        http://www.springframework.org/schema/aop/spring-aop.xsd
+			http://www.springframework.org/schema/context 
+			http://www.springframework.org/schema/context/spring-context.xsd ">
+	<!-- <context:component-scan base-package="com.zhouli.*"/> -->
+	<context:component-scan base-package="com.zhouli.controller" />
+	<!-- 添加validator属性 -->
+	<mvc:annotation-driven validator="validator" />
+	<mvc:annotation-driven />
+	<!-- 视图解析器 -->
+	<bean
+		class="org.springframework.web.servlet.view.InternalResourceViewResolver">
+		<property name="prefix" value="/WEB-INF/" />
+		<property name="suffix" value=".jsp" />
+	</bean>
+	<!-- <aop:aspectj-autoproxy proxy-target-class="true" />
+	<bean id="authorAspect" class="com.zhouli.controller.SellerAuthorizeAspect">
+	</bean> -->
+	<!-- 校验器，配置validator -->
+	<bean id="validator"
+		class="org.springframework.validation.beanvalidation.LocalValidatorFactoryBean">
+		<property name="providerClass" value="org.hibernate.validator.HibernateValidator"></property>
+		<!-- //<property name="validationMessageSource" ref="validationMessageSource"></property> -->
+	</bean>
+	<!-- 配置validationMessageSource -->
+	<!-- <bean id="validationMessageSource" class="org.springframework.context.support.ReloadableResourceBundleMessageSource"> 
+		指定校验信息的资源文件的基本文件名称，不包括后缀，后缀默认是properties <property name="basenames"> <list> 
+		<value>classpath:validationMessageSource</value> </list> </property> 指定文件的编码 
+		<property name="fileEncodings" value="utf8"></property> 对资源文件内容缓存的时间，单位秒 
+		<property name="cacheSeconds" value="120"></property> </bean> -->
+
+	<!-- springmvc.xml配置校验器 -->
+	<!-- 放行静态资源 -->
+	<mvc:resources location="/Images/" mapping="/Images/**" />
+	<mvc:resources location="/Js/" mapping="/Js/**" />
+	<mvc:resources location="/Styles/" mapping="/Styles/**" />
+	<mvc:resources location="/upload/" mapping="/upload/**" />
+</beans>

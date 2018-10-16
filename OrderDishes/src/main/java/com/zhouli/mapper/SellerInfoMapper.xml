@@ -1,0 +1,22 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
+<mapper namespace="com.zhouli.mapper.SellerInfoMapper">
+
+	<select id="findByOpenid" parameterType="java.lang.String"
+		resultType="com.zhouli.domain.SellerInfo">
+		SELECT seller_id sellerId,username username,password
+		password,openid
+		openid,create_time createTime
+		FROM SELLER_INFO WHERE openid = #{openid}
+	</select>
+	<insert id="save" parameterType="com.zhouli.domain.SellerInfo">
+		insert into seller_info
+		(seller_id,username,password,openid)
+		values(#{sellerId,jdbcType=VARCHAR},#{username,jdbcType=VARCHAR},
+		#{password,jdbcType=VARCHAR},
+		#{openid,jdbcType=VARCHAR}
+		)
+	</insert>
+	<!-- private String sellerId; private String username; private String password; 
+		private String openid; private Date createTime; private Date updateTime; -->
+</mapper>
